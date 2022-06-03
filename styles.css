@@ -15,7 +15,7 @@
 }
 
 .calculator {
-  width: 400px;
+  width: 300px;
   background: #ededed;
 }
 .calculator .calc-header {
@@ -115,10 +115,5 @@
   width: 100%;
   font-size: 25px;
   cursor: pointer;
-}
-.calculator .calc-body .calc-body-extras .calc-extras button:first-of-type {
-  height: 70%;
-}
-.calculator .calc-body .calc-body-extras .calc-extras button:last-of-type {
-  height: 30%;
+  height: 33.3333333333%;
 }

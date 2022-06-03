@@ -44,8 +44,8 @@ let screenText = document.querySelector("#calc-screen-text");
 let screenValue = document.querySelector("#calc-screen-value");
 
 let op = ["+", "-", "*", "/"];
-let num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-let extras = ["C", "="];
+let num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+let extras = ["C", "=", "B"];
 let value = "";
 
 allBtn.forEach(btn => {
@@ -56,13 +56,13 @@ allBtn.forEach(btn => {
         
         if(op.includes(tempVal)) {
             value += tempVal;
-            screenText.innerText = value;
+            screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
             btnStat();
         }
 
         if(num.includes(tempVal)) {
             value += tempVal; 
-            screenText.innerText = value;
+            screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
             btnStat(false);
         }
 
@@ -74,30 +74,51 @@ allBtn.forEach(btn => {
         }
 
         if(tempVal == extras[1]) {
-            let finalVal = value.replace(/-{1,}/g, "-");
+            let finalVal = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
             
-            screenValue.innerText = eval(finalVal);
+            try {
+                screenValue.innerText = eval(finalVal);
+            } catch(err) {
+                screenValue.innerText = "Unexpected Error";
+            }
+        }
+
+        if(tempVal == extras[2]) {
+            if(value) {
+                value = value.slice(0, -1);
+                if(value) {
+                    screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
+                } else {
+                    screenText.innerText = 0;
+                }
+            } else {
+                screenText.innerText = 0;
+            }
         }
     })
 })
 
-window.addEventListener("keypress", function(eve) {
+window.addEventListener("keydown", function(eve) {
     if(num.includes(eve.key)) {
         value += eve.key; 
-        screenText.innerText = value;
+        screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
         btnStat(false);
     }
 
     if(op.includes(eve.key)) {
         value += eve.key;
-        screenText.innerText = value;
+        screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
         btnStat();
     }
 
     if(eve.key == "Enter") {
-        let finalVal = value.replace(/-{1,}/g, "-");
+        let finalVal = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
         
-        screenValue.innerText = eval(finalVal);
+        try {
+            screenValue.innerText = eval(finalVal);
+        } catch(err) {
+            screenValue.innerText = "Unexpected Error";
+        }
     }
 
     if(eve.key == "C" || eve.key == "c") {
@@ -106,5 +127,17 @@ window.addEventListener("keypress", function(eve) {
         screenValue.innerText = " = Ans";
         btnStat();
     }
-
+    
+    if(eve.key == "Backspace" || eve.key == "B" || eve.key == "b") {
+        if(value) {
+            value = value.slice(0, -1);
+            if(value) {
+                screenText.innerText = value.replace(/-{1,}/g, "-").replace(/\.{1,}/g, ".");
+            } else {
+                screenText.innerText = 0;
+            }
+        } else {
+            screenText.innerText = 0;
+        }
+    }
 })

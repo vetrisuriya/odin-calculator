@@ -11,7 +11,7 @@
     background: royalblue;
 }
 .calculator {
-    width: 400px;
+    width: 300px;
     background: #ededed;
     
     .calc-header {
@@ -82,12 +82,7 @@
                     width: 100%;
                     font-size: 25px;
                     cursor: pointer;
-                    &:first-of-type {
-                        height: 70%;
-                    }
-                    &:last-of-type {
-                        height: 30%;
-                    }
+                    height: calc(100% / 3);
                 }
             }
         }
